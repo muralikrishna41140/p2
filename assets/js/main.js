@@ -13,19 +13,32 @@ const modalViews = document.querySelectorAll(".services__modal"),
   modalBtns = document.querySelectorAll(".services__button"),
   modalClose = document.querySelectorAll(".services__modal-close");
 
+console.log('Modal views found:', modalViews.length);
+console.log('Modal buttons found:', modalBtns.length);
+console.log('Modal close buttons found:', modalClose.length);
+
 // When the user clicks on the button, open the modal
 let modal = function (modalClick) {
+  console.log('Opening modal:', modalClick);
+  // First close all modals
+  modalViews.forEach((mv) => {
+    mv.classList.remove("active-modal");
+  });
+  // Then open the clicked modal
   modalViews[modalClick].classList.add("active-modal");
+  console.log('Modal opened:', modalViews[modalClick]);
 };
 
 modalBtns.forEach((mb, i) => {
   mb.addEventListener("click", () => {
+    console.log('Button clicked:', i);
     modal(i);
   });
 });
 
 modalClose.forEach((mc) => {
   mc.addEventListener("click", () => {
+    console.log('Close button clicked');
     modalViews.forEach((mv) => {
       mv.classList.remove("active-modal");
     });
@@ -147,9 +160,11 @@ themeButton.addEventListener("click", () => {
 const sr = ScrollReveal({
   origin: "top",
   distance: "60px",
-  duration: 2500,
-  delay: 400,
+  duration: 1500,
+  delay: 200,
   reset: true,
+  mobile: true,
+  viewFactor: 0.15,
 });
 
 sr.reveal(`.nav__menu`, {
@@ -172,62 +187,87 @@ sr.reveal(`.home__social, .home__scroll`, {
 sr.reveal(`.about__img`, {
   delay: 100,
   origin: "left",
-  scale: 0.9,
   distance: "30px",
 });
 
 sr.reveal(`.about__data, .about__description, .about__button-contact`, {
   delay: 100,
-  scale: 0.9,
   origin: "right",
   distance: "30px",
 });
 
 sr.reveal(`.skills__content`, {
   delay: 100,
-  scale: 0.9,
   origin: "bottom",
   distance: "30px",
+  interval: 200,
 });
 
-sr.reveal(`.services__title, services__button`, {
+sr.reveal(`.services__card`, {
   delay: 100,
-  scale: 0.9,
+  origin: "bottom",
+  distance: "30px",
+  interval: 100,
+});
+
+sr.reveal(`.work__filters`, {
+  delay: 100,
   origin: "top",
   distance: "30px",
 });
 
 sr.reveal(`.work__card`, {
   delay: 100,
-  scale: 0.9,
   origin: "bottom",
   distance: "30px",
+  interval: 100,
 });
 
 sr.reveal(`.testimonial__container`, {
   delay: 100,
-  scale: 0.9,
+  origin: "bottom",
+  distance: "50px",
+  viewFactor: 0.1,
+});
+
+sr.reveal(`.contact__content`, {
+  delay: 100,
+  origin: "bottom",
+  distance: "40px",
+  interval: 200,
+  viewFactor: 0.2,
+});
+
+sr.reveal(`.footer__container`, {
+  delay: 100,
   origin: "bottom",
   distance: "30px",
 });
 
-sr.reveal(`.contact__info, .contact__title-info`, {
-  delay: 100,
-  scale: 0.9,
-  origin: "left",
-  distance: "30px",
-});
+/*=============== CONTACT FORM ===============*/
+const contactForm = document.getElementById('contact-form'),
+      contactMessage = document.getElementById('contact-message')
 
-sr.reveal(`.contact__form, .contact__title-form`, {
-  delay: 100,
-  scale: 0.9,
-  origin: "right",
-  distance: "30px",
-});
+const sendEmail = (e) => {
+  e.preventDefault()
 
-sr.reveal(`.footer, footer__container`, {
-  delay: 100,
-  scale: 0.9,
-  origin: "bottom",
-  distance: "30px",
-});
+  // serviceID - templateID - #form - publicKey
+  emailjs.sendForm('service_ku6vu8p', 'template_nkjic6n', '#contact-form', '_B4pZUvfYdIi2MCTI')
+    .then(() => {
+      // Show sent message
+      contactMessage.textContent = 'Message sent successfully ✅'
+      
+      // Remove message after five seconds
+      setTimeout(() => {
+        contactMessage.textContent = ''
+      }, 5000)
+      
+      // Clear input fields
+      contactForm.reset()
+    }, () => {
+      // Show error message
+      contactMessage.textContent = 'Message not sent (service error) ❌'
+    })
+}
+
+contactForm.addEventListener('submit', sendEmail)

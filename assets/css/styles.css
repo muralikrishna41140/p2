@@ -539,13 +539,21 @@ body.light-theme {
 
 .services__card {
   background-color: var(--container-color);
-  padding: 3rem 1.5rem 1.5em;
+  padding: 1.5rem;
   border-radius: 1.25rem;
+  position: relative;
+  text-align: center;
+}
+
+.services__img {
+  width: 100%;
+  border-radius: 1rem;
+  margin-bottom: 1rem;
 }
 
 .services__title {
   font-size: var(--h3-font-size);
-  margin-bottom: 2.5rem;
+  margin-bottom: 0.5rem;
 }
 
 .services__button {
@@ -568,7 +576,7 @@ body.light-theme {
 
 /* Services modal */
 .services__modal {
-  position: fixed;
+  position: fixed !important;
   inset: 0;
   background-color: hsl(var(--second-hue), 28%, 16%, 0.7);
   padding: 2rem 1rem;
@@ -578,6 +586,10 @@ body.light-theme {
   z-index: var(--z-modal);
   visibility: hidden;
   opacity: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 }
 
 .services__modal-content {
@@ -712,8 +724,10 @@ body.light-theme {
 
 .testimonial__img {
   width: 60px;
-  border-radius: 3rem;
+  height: 60px;
+  border-radius: 50%;
   margin-bottom: 1rem;
+  object-fit: cover;
 }
 
 .testimonial__name {
@@ -838,6 +852,15 @@ body.light-theme {
 .contact__form-area textarea {
   resize: none;
 }
+
+.contact__message {
+  font-size: var(--small-font-size);
+  position: absolute;
+  bottom: 2.8rem;
+  left: 1.5rem;
+  color: var(--first-color);
+}
+
 /*=============== FOOTER ===============*/
 .footer {
   background-color: var(--first-color);
