@@ -54,6 +54,9 @@ let mixer = mixitup(".work__container", {
   animation: {
     duration: 300,
   },
+  load: {
+    filter: 'all'
+  }
 });
 
 /* Link active work */
@@ -78,6 +81,11 @@ let swiperTestimonial = new Swiper(".testimonial__container", {
   spaceBetween: 24,
   loop: true,
   grabCursor: true,
+
+  autoplay: {
+    delay: 3000,
+    disableOnInteraction: false,
+  },
 
   pagination: {
     el: ".swiper-pagination",
@@ -196,11 +204,11 @@ sr.reveal(`.about__data, .about__description, .about__button-contact`, {
   distance: "30px",
 });
 
-sr.reveal(`.skills__content`, {
+sr.reveal(`.skills__item`, {
   delay: 100,
   origin: "bottom",
   distance: "30px",
-  interval: 200,
+  interval: 150,
 });
 
 sr.reveal(`.services__card`, {
@@ -256,10 +264,12 @@ const sendEmail = (e) => {
     .then(() => {
       // Show sent message
       contactMessage.textContent = 'Message sent successfully ✅'
+      contactMessage.classList.add('show')
       
       // Remove message after five seconds
       setTimeout(() => {
         contactMessage.textContent = ''
+        contactMessage.classList.remove('show')
       }, 5000)
       
       // Clear input fields
@@ -267,6 +277,13 @@ const sendEmail = (e) => {
     }, () => {
       // Show error message
       contactMessage.textContent = 'Message not sent (service error) ❌'
+      contactMessage.classList.add('show')
+      
+      // Remove error message after five seconds
+      setTimeout(() => {
+        contactMessage.textContent = ''
+        contactMessage.classList.remove('show')
+      }, 5000)
     })
 }
 
